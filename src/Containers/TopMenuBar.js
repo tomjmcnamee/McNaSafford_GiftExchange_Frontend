@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { logOut, autoLogIn } from '../actions'
-import TopIcon from '../Images/WeThePromo-transparentBackgroundIcon.png'
+// import TopIcon from '../Images/WeThePromo-transparentBackgroundIcon.png'
 
 class TopMenuBar extends React.Component {
 
@@ -25,7 +25,7 @@ class TopMenuBar extends React.Component {
       <header id="pageHeader">
         <div className="ui grid" >
           <div className="six wide column"  >
-            <a href="/"><img id="wtp_logo" src={TopIcon} alt="We The Promo.com" /></a>
+            {/* <a href="/"><img id="wtp_logo" src={TopIcon} alt="We The Promo.com" /></a> */}
           </div>
           <div className="four wide column"  >
             <h1 style={{color: "red"}}>This site is still under development!</h1>

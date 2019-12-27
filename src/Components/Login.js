@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { logUserIn } from '../actions'
+import { logAccountIn } from '../actions'
 
 class LogIn extends React.Component {
 
@@ -57,7 +57,7 @@ class LogIn extends React.Component {
 }
 
 function mdp(dispatch) {
-    return { logUserIn: (path, accountCredentials, history) => dispatch(logUserIn(path, accountCredentials, history)) }
+    return { logAccountIn: (path, accountCredentials, history) => dispatch(logAccountIn(path, accountCredentials, history)) }
   }
   
   // this comes from reduct.js - K is local reference, V is foreign state attribute

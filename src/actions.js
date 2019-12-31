@@ -57,7 +57,14 @@ function logAccountIn (accountCredentials, history) {
               localStorage.removeItem("token")
               history.push("/LogIn")
             } else {
-              dispatch({ type: "AUTO LOG ACCOUNT IN", payload: response.userObj })
+              dispatch({ type: "AUTO LOG ACCOUNT IN", payload: response.loggedInAcct })
+              dispatch({ type: "SET PRIMARY USER", payload: response.primaryUser })
+              dispatch({ type: "SET MANAGING USERS", payload: response.managingUsers })
+              dispatch({ type: "SET ACTIVE USER", payload: response.primaryUser })
+              dispatch({ type: "SET ACTIVE USER WISH LIST", payload: response.activeUserWishList })
+              dispatch({ type: "SET ACTIVE USER MANAGED EVENTS", payload: response.activeUserManagedEvents })
+              dispatch({ type: "SET ACTIVE USER GIVER EVENT OBJs ARR", payload: response.activeUserGiverEventOBJsArr })
+              dispatch({ type: "SET ACTIVE USER GIVER EVENTS GETTER OBJs ARR", payload: response.activeUserGiverEventsGetterOBJsArr })    
             }
         })
         .catch((error) => {

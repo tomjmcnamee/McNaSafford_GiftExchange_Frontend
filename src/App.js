@@ -33,14 +33,13 @@ class App extends React.Component {
             <li><NavLink to="/UserAdministration">User Administration</NavLink></li>
         </ul>
       </nav>
-        {/* <Switch> */}
+        <Switch>
           <div id="content" >
             <Route path="/SignUp" component={SignUp} />
             <Route path='/LogIn' component={localStorage.token === undefined ? LogIn : null} />
             <Route exact path="/" component={homepage} />
-  
           </div>     
-        {/* </Switch> */}
+        </Switch>
       </div>
     ) //ends return
   } // ends render

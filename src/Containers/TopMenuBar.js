@@ -15,7 +15,7 @@ class TopMenuBar extends React.Component {
   render() {
     // Determine if Log In or Log Out button
     let topButton = ""
-    if (this.props.loggedInUserObj === undefined || this.props.loggedInUserObj.id === undefined) {
+    if (this.props.loggedInAcct === undefined || this.props.loggedInAcct.id === undefined) {
       topButton =  <a href="/LogIn" > <button>Log In or Sign Up</button> </a>
     } else {
         topButton = <button onClick={this.logOutHandler}  >Log Out</button> 
@@ -32,7 +32,7 @@ class TopMenuBar extends React.Component {
           </div>
           <div className="six wide column"  >
             <div id="userNameAndbutton">
-              {this.props.loggedInUserObj === undefined || this.props.loggedInUserObj.id === undefined ? null : <h1 id="welcomeBackInHeader" >Welcome back, {this.props.loggedInUserObj.first_name} </h1>}
+              {this.props.loggedInAcct === undefined || this.props.loggedInAcct.id === undefined ? null : <h1 id="welcomeBackInHeader" >Welcome back, {this.props.primaryUser.first_name} </h1>}
               {topButton}
             </div>
           </div>
@@ -49,7 +49,11 @@ function mdp(dispatch) {
 
 // this comes from reduct.js - K is local reference, V is foreign state attribute
 function msp(state) {
-  return { loggedInUserObj: state.loggedInUserObj} 
+  return { 
+    loggedInAcct: state.loggedInAcct,
+    primaryUser: state.primaryUser,
+    activeUser: state.activeUser,
+  } 
 }
 
 export default connect(msp, mdp)(TopMenuBar) 

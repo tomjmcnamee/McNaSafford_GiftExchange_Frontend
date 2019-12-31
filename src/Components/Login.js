@@ -10,7 +10,7 @@ class LogIn extends React.Component {
     }
 
     componentDidMount(){
-        document.title = "WeThePromo - Log In"
+        document.title = "McNaSafford - Log In"
         this.loggedIn()
     }
   
@@ -26,7 +26,7 @@ class LogIn extends React.Component {
 
     formSubmitHandler = (event) => {
         event.preventDefault()
-        this.props.logUserIn("login", this.state, this.props.history)
+        this.props.logAccountIn(this.state, this.props.history)
     }
     
 

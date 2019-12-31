@@ -4,9 +4,9 @@
 let backendURL = process.env.REACT_APP_FETCH_LOCATION
 
 
-function logAccountIn (path, accountCredentials, history) {
+function logAccountIn (accountCredentials, history) {
   return function (dispatch) {
-    fetch(backendURL + path, {
+    fetch(backendURL + "login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -21,11 +21,15 @@ function logAccountIn (path, accountCredentials, history) {
           history.push("/LogIn")
         } else {
           localStorage.setItem("token", response.token)
-          dispatch({ type: "LOG USER IN", payload: response.userObj })
-          dispatch({ type: "FETCH LOGGED IN USERS SUPPORTED CAMPAIGNS", payload: response.loggedInUserSupportedCampaignObjsArr })
-          dispatch({ type: "FETCH LOGGED IN USERS CAMPAIGN CONTRIBUTION OBJS", payload: response.campaignContributionsOjbsArr })
-          dispatch({ type: "LOGGED IN USERS FAVORITED CAMPAIGNS", payload: response.favoritedCampaigns[0] })
-          history.push("/BrowseCampaigns")
+          dispatch({ type: "LOG ACCOUNT IN", payload: response.loggedInAcct })
+          dispatch({ type: "SET PRIMARY USER", payload: response.primaryUser })
+          dispatch({ type: "SET MANAGING USERS", payload: response.managingUsers })
+          dispatch({ type: "SET ACTIVE USER", payload: response.primaryUser })
+          dispatch({ type: "SET ACTIVE USER WISH LIST", payload: response.activeUserWishList })
+          dispatch({ type: "SET ACTIVE USER MANAGED EVENTS", payload: response.activeUserManagedEvents })
+          dispatch({ type: "SET ACTIVE USER GIVER EVENT OBJs ARR", payload: response.activeUserGiverEventOBJsArr })
+          dispatch({ type: "SET ACTIVE USER GIVER EVENTS GETTER OBJs ARR", payload: response.activeUserGiverEventsGetterOBJsArr })
+          history.push("/")
         }
       })
       .catch((error) => {
@@ -50,13 +54,10 @@ function logAccountIn (path, accountCredentials, history) {
           .then(resp => resp.json())
           .then(response => {
             if (response.status === "error") {
-              alert("incorrect email/password combination")
+              localStorage.removeItem("token")
               history.push("/LogIn")
             } else {
-              dispatch({ type: "AUTO LOG USER IN", payload: response.userObj })
-              dispatch({ type: "FETCH LOGGED IN USERS SUPPORTED CAMPAIGNS", payload: response.loggedInUserSupportedCampaignObjsArr })
-              dispatch({ type: "FETCH LOGGED IN USERS CAMPAIGN CONTRIBUTION OBJS", payload: response.campaignContributionsOjbsArr })
-              dispatch({ type: "LOGGED IN USERS FAVORITED CAMPAIGNS", payload: response.favoritedCampaigns[0] })
+              dispatch({ type: "AUTO LOG ACCOUNT IN", payload: response.userObj })
             }
         })
         .catch((error) => {
@@ -84,9 +85,7 @@ function logAccountIn (path, accountCredentials, history) {
           alert(response.errors)
         } else {
           localStorage.setItem("token", response.token)
-          dispatch({ type: "LOG USER IN", payload: response.userObj })
-          dispatch({ type: "FETCH LOGGED IN USERS SUPPORTED CAMPAIGNS", payload: response.loggedInUserSupportedCampaignObjsArr })
-          dispatch({ type: "FETCH LOGGED IN USERS CAMPAIGN CONTRIBUTION OBJS", payload: response.campaignContributionsOjbsArr })
+          dispatch({ type: "LOG ACCOUNT IN", payload: response.userObj })
           history.push("/BrowseCampaigns")
         }
       })
@@ -95,9 +94,16 @@ function logAccountIn (path, accountCredentials, history) {
 
   function logOut (history) {
     return function (dispatch) {
-      dispatch({ type: "LOG USER OUT", payload: {}})
+      dispatch({ type: "LOG ACCOUNT OUT", payload: {}})
+      dispatch({ type: "UNSET PRIMARY USER", payload: {}})
+      dispatch({ type: "UNSET MANAGING USERS", payload: {}})
+      dispatch({ type: "UNSET ACTIVE USER", payload: {}})
+      dispatch({ type: "UNSET ACTIVE USER WISH LIST", payload: {}})
+      dispatch({ type: "UNSET ACTIVE USER MANAGED EVENTS", payload: {}})
+      dispatch({ type: "UNSET ACTIVE USER GIVER EVENT OBJs ARR", payload: {}})
+      dispatch({ type: "UNSET ACTIVE USER GIVER EVENTS GETTER OBJs ARR", payload: {}})
       localStorage.removeItem("token")
-      history.push("/about")
+      history.push("/")
     } // ends Thunk dispatch function
   } // ends logOut function
 

@@ -18,7 +18,7 @@ class App extends React.Component {
 
 
   componentDidMount(){
-    document.title = "WeThePromo - Home Page"    
+    document.title = "McNaSafford - Home Page"    
   }  // ends component did
 
   render() {

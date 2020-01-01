@@ -9,6 +9,7 @@ import TopMenuBar from './Containers/TopMenuBar'
 import homepage from './Containers/homepage'
 import SignUp from './Components/Signup'
 import LogIn from './Components/Login'
+import MyWishlist from './Components/MyWishlist'
 // import UserHome from './Components/UserHome'
 
 
@@ -25,21 +26,31 @@ class App extends React.Component {
     return (
       <div className="App">
       <TopMenuBar history={this.props.history} />
-      <nav id="topMenuLinks"> 
-        <ul>
-            <li><NavLink to="/UserHome">My Homepage</NavLink></li>
-            <li><NavLink to="/viewwishlists"> View a wishlist</NavLink></li>
-            <li><NavLink to="/mywishlist">Create a wishlist</NavLink></li>
-            <li><NavLink to="/UserAdministration">User Administration</NavLink></li>
-        </ul>
-      </nav>
-        <Switch>
+      <div className="ui grid" >
+        <div className="four wide column"  >
+          <nav id="topMenuLinks"> 
+            <ul>
+                <li><NavLink to="/UserHome">My Homepage</NavLink></li>
+                <li><NavLink to="/mywishlist"> My Wishlist</NavLink></li>
+                <li><NavLink to="/myevents">My Events</NavLink></li>
+                <li><NavLink to="/UserAdministration">User Administration</NavLink></li>
+            </ul>
+          </nav>
+        </div >
+        <div className="twelve wide column"  >
+        {/* <Switch> */}
           <div id="content" >
             <Route path="/SignUp" component={SignUp} />
             <Route path='/LogIn' component={localStorage.token === undefined ? LogIn : null} />
+            <Route path='/mywishlist' component={MyWishlist} />
             <Route exact path="/" component={homepage} />
           </div>     
-        </Switch>
+        {/* </Switch> */}
+        </div >
+
+
+      </div>
+      
       </div>
     ) //ends return
   } // ends render

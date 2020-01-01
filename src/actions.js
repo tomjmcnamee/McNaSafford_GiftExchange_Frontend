@@ -20,6 +20,7 @@ function logAccountIn (accountCredentials, history) {
           alert("incorrect email/password combination")
           history.push("/LogIn")
         } else {
+          debugger
           localStorage.setItem("token", response.token)
           dispatch({ type: "LOG ACCOUNT IN", payload: response.loggedInAcct })
           dispatch({ type: "SET PRIMARY USER", payload: response.primaryUser })
@@ -114,10 +115,55 @@ function logAccountIn (accountCredentials, history) {
     } // ends Thunk dispatch function
   } // ends logOut function
 
+  function addWishlistItem (userID, itemDetails, history) {
+    return function (dispatch) {
+      fetch(backendURL + "wishlist", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ wishlistItem: itemDetails, userID})
+      })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          dispatch({ type: "SET ACTIVE USER WISH LIST", payload: response.activeUserWishList })
+          // history.push("/")
+        }
+      })
+    } // ends Thunk dispatch function
+  } // ends addWishlistItem
+
+  function removeItemFromWishlist (wishlistItemID, userID) {
+    return function (dispatch) {
+      fetch(backendURL + "wishlist", {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ wishlistItemID, userID})
+      })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          dispatch({ type: "SET ACTIVE USER WISH LIST", payload: response.activeUserWishList })
+          // history.push("/")
+        }
+      })      
+    } // ends Thunk dispatch function
+  } // ends removeItemFromWishlist
 
 export { 
         logAccountIn,
         autoLogIn,
         signUp,
         logOut,
+        addWishlistItem,
+        removeItemFromWishlist,
       }

@@ -20,7 +20,6 @@ function logAccountIn (accountCredentials, history) {
           alert("incorrect email/password combination")
           history.push("/LogIn")
         } else {
-          debugger
           localStorage.setItem("token", response.token)
           dispatch({ type: "LOG ACCOUNT IN", payload: response.loggedInAcct })
           dispatch({ type: "SET PRIMARY USER", payload: response.primaryUser })
@@ -159,6 +158,35 @@ function logAccountIn (accountCredentials, history) {
     } // ends Thunk dispatch function
   } // ends removeItemFromWishlist
 
+  function switchActiveUser (userObj) {
+    return function (dispatch) {
+      fetch( backendURL + "switchUser/" + userObj.id, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json",
+          // body: JSON.stringify({ userID: userObj.id })
+        }
+      })
+        .then(resp => resp.json())
+        .then(response => {
+          if (response.status === "error") {
+            console.log("error: here's response: ", response)
+          } else {
+            console.log("TEST - response from Fetch: ", response)
+            dispatch({ type: "SET ACTIVE USER", payload: userObj })
+            dispatch({ type: "SET ACTIVE USER WISH LIST", payload: response.activeUserWishList })
+            dispatch({ type: "SET ACTIVE USER MANAGED EVENTS", payload: response.activeUserManagedEvents })
+            dispatch({ type: "SET ACTIVE USER GIVER EVENT OBJs ARR", payload: response.activeUserGiverEventOBJsArr })
+            dispatch({ type: "SET ACTIVE USER GIVER EVENTS GETTER OBJs ARR", payload: response.activeUserGiverEventsGetterOBJsArr })    
+          }
+      })
+      .catch((error) => {
+        console.log("autoLoginFETCHError", error)
+      });
+    } // ends Thunk dispatch function
+  } // ends switchActiveUser
+
 export { 
         logAccountIn,
         autoLogIn,
@@ -166,4 +194,5 @@ export {
         logOut,
         addWishlistItem,
         removeItemFromWishlist,
+        switchActiveUser,
       }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { logOut, autoLogIn } from '../actions'
+import { logOut, autoLogIn, switchActiveUser } from '../actions'
 // import TopIcon from '../Images/WeThePromo-transparentBackgroundIcon.png'
 
 class TopMenuBar extends React.Component {
@@ -33,7 +33,9 @@ class TopMenuBar extends React.Component {
           <div className="six wide column"  >
             <div id="userNameAndbutton">
               {this.props.loggedInAcct === undefined || this.props.loggedInAcct.id === undefined ? null : <h1 id="welcomeBackInHeader" >Welcome back, {this.props.primaryUser.first_name} </h1>}
+              {this.props.primaryUser.id === this.props.activeUser.id ? null : <h4 id="emulatingUserString" >You are logged in as <b>{this.props.activeUser.first_name + " " + this.props.activeUser.last_name}</b>. </h4>}
               {topButton}
+              {this.props.primaryUser.id === this.props.activeUser.id ? null : <button onClick={() => this.props.switchActiveUser(this.props.primaryUser)}  >switch back to yourself</button>}
             </div>
           </div>
         </div>
@@ -44,7 +46,9 @@ class TopMenuBar extends React.Component {
 function mdp(dispatch) {
   return { 
     logOut: (arg1) => dispatch(logOut(arg1)),
-    autoLogIn: () => dispatch(autoLogIn())}
+    autoLogIn: () => dispatch(autoLogIn()),
+    switchActiveUser: (primaryUser) => dispatch(switchActiveUser(primaryUser)),
+  }
 }
 
 // this comes from reduct.js - K is local reference, V is foreign state attribute

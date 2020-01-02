@@ -12,6 +12,7 @@ import LogIn from './Components/Login'
 import MyWishlist from './Components/MyWishlist'
 import MyHomepage from './Components/MyHomepage'
 import MyEvents from './Components/MyEvents'
+import EventDetails from './Components/EventDetails'
 // import UserHome from './Components/UserHome'
 
 
@@ -47,6 +48,7 @@ class App extends React.Component {
             <Route exact path='/mywishlist' component={MyWishlist} />
             <Route exact path='/myhomepage' component={MyHomepage} />
             <Route exact path='/myevents' component={MyEvents} />
+            <Route exact path='/EventDetails' component={EventDetails} />
             <Route exact path="/" component={homepage} />
           </div>     
         {/* </Switch> */}

@@ -33,7 +33,7 @@ class TopMenuBar extends React.Component {
           <div className="six wide column"  >
             <div id="userNameAndbutton">
               {this.props.loggedInAcct === undefined || this.props.loggedInAcct.id === undefined ? null : <h1 id="welcomeBackInHeader" >Welcome back, {this.props.primaryUser.first_name} </h1>}
-              {this.props.primaryUser.id === this.props.activeUser.id ? null : <h4 id="emulatingUserString" >You are logged in as <b>{this.props.activeUser.first_name + " " + this.props.activeUser.last_name}</b>. </h4>}
+              {this.props.primaryUser.id === this.props.activeUser.id ? null : <h4 id="emulatingUserString" style={{color: "red"}}>You are logged in as <b>{this.props.activeUser.first_name + " " + this.props.activeUser.last_name}</b>. </h4>}
               {topButton}
               {this.props.primaryUser.id === this.props.activeUser.id ? null : <button onClick={() => this.props.switchActiveUser(this.props.primaryUser)}  >switch back to yourself</button>}
             </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {  } from '../actions'
+import { setActiveEvent } from '../actions'
 import { connect } from 'react-redux'
 
 
@@ -10,40 +10,50 @@ class GridLinesBuilder extends React.Component {
 	
 	
 	// totalContributionsForThisCampaign = (campaigns) => {  return campaigns.reduce( (sum, contrib) => {return sum + contrib.contribution_amount }, 0) }
-  // render() {
+  render() {
 
 
-      // switch(this.props.gridType) {
-        // case "Campaigns You've Supported":
-						// let totalContributionsForThisCampaign = this.props.campaignContributions.reduce()
-						// function calculatePayroll(employees) { return employees.reduce(function(sum, employee) { return sum + allWagesFor.call(employee) }, 0) }
-            // return(
-            // <tr className="center aligned">
-            //   <th data-label="ID" className="changePoiterToFinger" onClick={() => this.props.setSelectedCampaignAndContributions(this.props.gridLineObj, this.props.history)}>{this.props.gridLineObj.id}</th>
-            //   <td  data-label="Name"  >{this.props.gridLineObj.campaign_name}</td>
-            //   <td data-label="Description"  >{this.props.gridLineObj.campaign_description}</td>
-            //   <td  data-label="Promo Sentiment"  >{mapSentimentIdToSentimentDescription(this.props.gridLineObj.campaign_sentiment_id)}</td>
-            //   <td data-label="Your total contributions" >${this.totalContributionsForThisCampaign(this.props.thisCampaignContributions)}</td>
-            //   <td data-label="Promo Status" >{mapStatusIdToStatusName(this.props.gridLineObj.campaign_status_id)}</td> 
-            // </tr>
-            // )  // ends "Campaigns You've Supported" RETURN
-          // break 
-        // default:
-      // } // ends switch
+      switch(this.props.gridType) {
+        case "EventsGrid":
+            return(
+            <tr className="left aligned changePoiterToFinger" onClick={() => this.props.setActiveEvent(this.props.gridLineObj,this.props.history)}>
+            {/* <tr className="left aligned changePoiterToFinger" onClick={() => this.props.history.push("/EventDetails")}> */}
+              <td data-label="EventCreateDate" >{this.props.gridLineObj.created_at}</td>
+              <td  data-label="EventName"  >{this.props.gridLineObj.event_name}</td>
+              <td data-label="EventDate"  >{this.props.gridLineObj.event_date}</td>
+            </tr>
+            )  // ends "Campaigns You've Supported" RETURN
+          break 
+        case "selectedGetterWishList":
+            return(
+            <tr className="left aligned " >
+            {/* <tr className="left aligned changePoiterToFinger" onClick={() => this.props.history.push("/EventDetails")}> */}
+              <td data-label="ItemImage" ><img className="WishlistCardImgINGRID" alt="Gift" src={this.props.gridLineObj.gift_image}  /></td>
+              <td  data-label="ItemName"  >{this.props.gridLineObj.gift_name}</td>
+              <td data-label="LinkButton"  ><a target="_blank" href={this.props.gridLineObj.amazon_url}>see this item on Amazon</a></td>
+              <td data-label="Purchased"  ><button onClick={() => console.log("You purchased this one")}>Mark as purchased!</button></td>
+            </tr>
+            )  // ends "Campaigns You've Supported" RETURN
+          break 
+        default:
+      } // ends switch
 
 
-  // } // ends Render
+   } // ends Render
 }  // ends GridBuilder class
-// this comes from the actions.js function names
+
 function mdp(dispatch) {
-  // return { setSelectedCampaignAndContributions: ( path, campaignObj, history ) => dispatch(setSelectedCampaignAndContributions( path, campaignObj, history)) }
-  // return { setSelectedCampaignAndContributions: ( campaignObj, history ) => dispatch(setSelectedCampaignAndContributions( campaignObj, history)) }
+  return { 
+    setActiveEvent: ( eventObj, history ) => dispatch(setActiveEvent( eventObj, history))
+  }
 }
 
 
 // this comes from reduct.js - K is local reference, V is foreign state attribute
 function msp(state) {
-  // return { workingEntityObj: state.workingEntityObj}
+  return { 
+    // workingEntityObj: state.workingEntityObj
+  }
 }
 
 export default connect(msp, mdp)(GridLinesBuilder)

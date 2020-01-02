@@ -112,3 +112,13 @@ div .WishListCard {
   width: auto;
   height: auto;
 }
+.WishlistCardImgINGRID{
+  max-width: 100px;
+  max-height:50%;
+  width: auto;
+  height: auto;
+}
+
+.changePoiterToFinger{
+  cursor: pointer;
+}

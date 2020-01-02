@@ -53,7 +53,7 @@ function logAccountIn (accountCredentials, history) {
         })
           .then(resp => resp.json())
           .then(response => {
-            if (response.status === "error") {
+            if (!!response.error) {
               localStorage.removeItem("token")
               history.push("/LogIn")
             } else {
@@ -76,15 +76,15 @@ function logAccountIn (accountCredentials, history) {
 
 
 
-  function signUp (userInfo, history) {
+  function signUp (user, account, history) {
     return function (dispatch) {
-    fetch(backendURL + "user_accounts", {
+    fetch(backendURL + "accounts", {
       method: "POST",
       headers: {
         "content-type": "application/json",
         accepts: "application/json"
       },
-      body: JSON.stringify({ user_account: userInfo })
+      body: JSON.stringify({ account: account, user: user })
     })
       .then(resp => resp.json())
       .then(response => {
@@ -92,8 +92,10 @@ function logAccountIn (accountCredentials, history) {
           alert(response.errors)
         } else {
           localStorage.setItem("token", response.token)
-          dispatch({ type: "LOG ACCOUNT IN", payload: response.userObj })
-          history.push("/BrowseCampaigns")
+          dispatch({ type: "LOG ACCOUNT IN", payload: response.loggedInAcct })
+          dispatch({ type: "SET PRIMARY USER", payload: response.primaryUser })
+          dispatch({ type: "SET ACTIVE USER", payload: response.primaryUser })
+          history.push("/mywishlist")
         }
       })
     }  // Ends SignUp THUNK function
@@ -187,6 +189,34 @@ function logAccountIn (accountCredentials, history) {
     } // ends Thunk dispatch function
   } // ends switchActiveUser
 
+  function setActiveEvent (eventObj, history) {
+    return function (dispatch) {
+      fetch( backendURL + "event", {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json",
+          EventID: eventObj.id
+        }
+      })
+        .then(resp => resp.json())
+        .then(response => {
+          if (response.status === "error") {
+            console.log("error: here's response: ", response)
+          } else {
+            console.log("TEST - response from Fetch: ", response)
+            dispatch({ type: "SET ACTIVE EVENT GIFT GETTERS ARRAY", payload:  response.eventGettersUserOBJsArr })
+            dispatch({ type: "SET ACTIVE EVENT WISH LIST ITEMS", payload:  response.eventWishLists })
+            dispatch({ type: "SET ACTIVE EVENT", payload:  eventObj })
+            history.push("/EventDetails")
+          }
+      })
+      .catch((error) => {
+        console.log("autoLoginFETCHError", error)
+      });
+    } // ends Thunk dispatch function
+  } // ends setActiveEvent
+
 export { 
         logAccountIn,
         autoLogIn,
@@ -195,4 +225,5 @@ export {
         addWishlistItem,
         removeItemFromWishlist,
         switchActiveUser,
+        setActiveEvent,
       }

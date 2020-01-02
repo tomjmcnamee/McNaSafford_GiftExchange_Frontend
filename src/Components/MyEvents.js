@@ -31,17 +31,37 @@ class MyEvents extends React.Component {
   }
 
   render() {
-    let eventsImManaging
+    let eventsIveCreated
     if (this.props.activeUserManagedEvents.length > 0) {
-      eventsImManaging = <GridBuilder gridType={"ActiveUserManagedEvents"} gridLinesArray={this.props.activeUserManagedEvents} history={this.props.history}/>
+      eventsIveCreated = <GridBuilder gridType="EventsGrid" gridLinesArray={this.props.activeUserManagedEvents} history={this.props.history}/>
     } else {
-      eventsImManaging = []
+      eventsIveCreated = []
+    }
+    
+    let eventsImAttending
+    if (this.props.activeUserGiverEventOBJsArr.length > 0) {
+      eventsImAttending = <GridBuilder gridType="EventsGrid" gridLinesArray={this.props.activeUserGiverEventOBJsArr} history={this.props.history}/>
+    } else {
+      eventsImAttending = []
     }
     
 
     return (
       <div id="MyHomepage">
-        {/* <ManageOtherUsers /> */}
+        <div className="TopAndCenter">
+          <h1>My Events</h1>
+        </div>
+        <div>
+          <h3>Events I've created</h3>
+          {eventsIveCreated}
+        </div>
+        <br />
+        <div>
+          <h3>Events I'm attending</h3>
+            {eventsImAttending}
+        </div>
+
+
       </div>
   )} // ends Return and Render
 } // ends class

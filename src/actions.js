@@ -217,6 +217,27 @@ function logAccountIn (accountCredentials, history) {
     } // ends Thunk dispatch function
   } // ends setActiveEvent
 
+  function addManagedUser (userDetails, managingAcctID, history) {
+    return function (dispatch) {
+      fetch(backendURL + "user", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ user: userDetails, managing_account_id: managingAcctID})
+      })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          dispatch({ type: "SET MANAGING USERS", payload: response.managingUsers })
+          // history.push("/")
+        }
+      })
+    } // ends Thunk dispatch function
+  } // ends addEvent
   function addEvent (newEvent, primaryUserID) {
     return function (dispatch) {
       fetch(backendURL + "event", {
@@ -237,7 +258,7 @@ function logAccountIn (accountCredentials, history) {
         }
       })
     } // ends Thunk dispatch function
-  } // ends addEvent
+  } // ends addManagedUser
 
 export { 
         logAccountIn,
@@ -248,5 +269,6 @@ export {
         removeItemFromWishlist,
         switchActiveUser,
         setActiveEvent,
-        addEvent
+        addEvent,
+        addManagedUser
       }

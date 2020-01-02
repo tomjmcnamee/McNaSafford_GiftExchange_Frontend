@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { switchActiveUser } from '../actions'
+import { addEvent } from '../actions'
 import  GridBuilder  from './GridBuilder'
 // import TopIcon from '../Images/WeThePromo-transparentBackgroundIcon.png'
 
 class MyEvents extends React.Component {
 
   state = {
+    create_event: false,
     event_name: "",
     event_date: ""
   }
@@ -21,12 +22,21 @@ class MyEvents extends React.Component {
     })
   }
 
-  formSubmitHandler = (event) => {
+  newEventFormSubmitHandler = (event) => {
     event.preventDefault()
-    this.props.addWishlistItem(this.props.activeUser.id, this.state, this.props.history)
+    let newEvent = {event_name: this.state.event_name, event_date: this.state.event_date, event_managing_user_id: this.props.primaryUser.id}
+    this.props.addEvent(newEvent, this.props.primaryUser.id)
     this.setState({
       event_name: "",
-      event_date: ""
+      event_date: "",
+      create_event: false
+    })
+  }
+
+  createEvent = (event) => {
+    event.preventDefault()
+    this.setState({
+      create_event: true
     })
   }
 
@@ -54,6 +64,16 @@ class MyEvents extends React.Component {
         <div>
           <h3>Events I've created</h3>
           {eventsIveCreated}
+          {this.state.create_event === false 
+          ? 
+            <button onClick={this.createEvent} >Create New Event</button> 
+          : 
+            <form onSubmit={this.newEventFormSubmitHandler}>
+              <h5>Event Name: <input type="text" required name="event_name" fluid icon='user' iconPosition='left' value={this.state.event_name} onChange={this.formChangeHandler}/></h5>
+              <h5>Event Name: <input type="date" required name="event_date" fluid icon='user' iconPosition='left' value={this.state.event_date} onChange={this.formChangeHandler}/></h5>
+              <button type="submit" >Save New Event</button>
+            </form>
+            }
         </div>
         <br />
         <div>
@@ -68,7 +88,7 @@ class MyEvents extends React.Component {
 
 function mdp(dispatch) {
   return { 
-
+    addEvent: (newEvent, primaryUserID) => dispatch(addEvent(newEvent, primaryUserID))
   }
 }
 

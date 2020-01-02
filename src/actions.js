@@ -217,6 +217,28 @@ function logAccountIn (accountCredentials, history) {
     } // ends Thunk dispatch function
   } // ends setActiveEvent
 
+  function addEvent (newEvent, primaryUserID) {
+    return function (dispatch) {
+      fetch(backendURL + "event", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ event: newEvent, userID: primaryUserID })
+      })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          dispatch({ type: "SET ACTIVE USER MANAGED EVENTS", payload: response.activeUserManagedEvents })
+          // history.push("/")
+        }
+      })
+    } // ends Thunk dispatch function
+  } // ends addEvent
+
 export { 
         logAccountIn,
         autoLogIn,
@@ -226,4 +248,5 @@ export {
         removeItemFromWishlist,
         switchActiveUser,
         setActiveEvent,
+        addEvent
       }

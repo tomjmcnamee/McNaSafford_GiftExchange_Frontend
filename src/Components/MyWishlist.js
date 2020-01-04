@@ -44,6 +44,7 @@ class MyWishlist extends React.Component {
 
     return (
       <div id="MyWishlist">
+        <h1>Create Your Wishlist!</h1>
         <form onSubmit={this.formSubmitHandler}>
           <h3>Gift Name: <input required name="gift_name" type="text" value={this.state.gift_name} onChange={this.formChangeHandler}/></h3>
           <h3>Gift Image: <input required name="gift_image" type="text" value={this.state.gift_image} onChange={this.formChangeHandler}/></h3>

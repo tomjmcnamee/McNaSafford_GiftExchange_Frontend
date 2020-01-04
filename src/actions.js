@@ -317,6 +317,7 @@ function logAccountIn (accountCredentials, history) {
           alert(response.errors)
         } else {
           dispatch({ type: "SET ACTIVE EVENT GIFT GETTERS ARRAY",  payload: response.eventGettersUserOBJsArr })
+          dispatch({ type: "SET ACTIVE EVENT WISH LIST ITEMS", payload:  response.eventWishLists })
         }
       })
     } // ends Thunk dispatch function

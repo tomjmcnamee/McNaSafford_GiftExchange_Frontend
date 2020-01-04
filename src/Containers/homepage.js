@@ -12,7 +12,16 @@ class HomePage extends React.Component {
 
    return (
       <div id="homepage">
-        
+        <h1>Welcome to the McNaSafford Gift Exchange!</h1>
+        {this.props.loggedInAcct.id 
+        ?
+          <h2>Use the side menu options to create a wishlist, create events, and invite registered users to your events!</h2>
+        :
+          <div>
+            <h2>Log In or Create an Account to get started!</h2>
+            <a href="/LogIn" > <button>Log In or Sign Up</button> </a>
+          </div>
+        }
       </div>
     ) // Ends Return
   } // Ends Render
@@ -24,7 +33,7 @@ function mdp(dispatch) {
 }
 
 function msp(state) { return { 
-  
+  loggedInAcct: state.loggedInAcct,
   }
 }
 

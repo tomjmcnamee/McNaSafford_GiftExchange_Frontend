@@ -5,7 +5,8 @@ import  GridBuilder  from './GridBuilder'
 import { gatherAndSetAllUsers, addInviteeToEvent, addGiftGetterToEvent} from '../actions'
 // import TopIcon from '../Images/WeThePromo-transparentBackgroundIcon.png'
 
-class EventDetails extends React.Component {
+class EventDetails extends React.Component
+ {
 
   state = {
     userIDofWishListToDisplay: "",
@@ -37,9 +38,15 @@ class EventDetails extends React.Component {
 
 
   exposeWishList = (userID) => {
-    this.setState({
-      userIDofWishListToDisplay: userID
-    })
+    if (userID !== this.props.activeUser.id) {
+      this.setState({
+        userIDofWishListToDisplay: userID
+      })
+    } else {
+      this.setState({
+        userIDofWishListToDisplay: ""
+      })
+    }
   }
 
   exposeInvitableUsers = () => {  
@@ -94,7 +101,7 @@ class EventDetails extends React.Component {
     // let eventInvitees = this.props.allUserObjs
     let eventInvitees 
     if (this.props.activeEventInvitees.length > 0) {
-      eventInvitees = this.props.activeEventInvitees.map( user => <li className="changePoiterToFinger" onClick={() => this.exposeWishList(user.id)}>{user.first_name + " " + user.last_name}</li>)
+      eventInvitees = this.props.activeEventInvitees.map( user => <li >{user.first_name + " " + user.last_name}</li>)
     } else {
       eventInvitees = []
     }
@@ -170,7 +177,7 @@ class EventDetails extends React.Component {
         {this.props.activeEventGiftGettersArr.length > 0 
         ?
           <div>
-            <h3>Below are the names of people that will recieve gifts at this event.  Clicking on any name will expose the items on their wishlists that have not yet been purchased as gifts by other people.</h3>
+            <h3>Below are the names of people that will recieve gifts at this event.  Clicking on any name will expose the items on their wishlists that have not yet been purchased as gifts by other people.  <br/><b style={{color: "red"}}> Note: you can't see your own wishlist from this view since it would ruin the surprise!</b></h3>
             <ul>
               {eventGiftGetters}
               {this.state.userIDofWishListToDisplay !== "" ? selectedGetterWishListGrid.props.gridLinesArray.length > 0 ? selectedGetterWishListGrid : <h3>This user's wishlist is empty</h3> : null}

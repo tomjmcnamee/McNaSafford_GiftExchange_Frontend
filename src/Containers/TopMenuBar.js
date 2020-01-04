@@ -6,7 +6,7 @@ import { logOut, autoLogIn, switchActiveUser } from '../actions'
 class TopMenuBar extends React.Component {
 
   componentDidMount(){
-    this.props.autoLogIn()
+    this.props.autoLogIn(this.props.history)
   }
 
   logOutHandler = () => {
@@ -46,7 +46,7 @@ class TopMenuBar extends React.Component {
 function mdp(dispatch) {
   return { 
     logOut: (arg1) => dispatch(logOut(arg1)),
-    autoLogIn: () => dispatch(autoLogIn()),
+    autoLogIn: (history) => dispatch(autoLogIn(history)),
     switchActiveUser: (primaryUser) => dispatch(switchActiveUser(primaryUser)),
   }
 }

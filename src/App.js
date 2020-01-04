@@ -10,7 +10,7 @@ import homepage from './Containers/homepage'
 import SignUp from './Components/Signup'
 import LogIn from './Components/Login'
 import MyWishlist from './Components/MyWishlist'
-import MyHomepage from './Components/MyHomepage'
+import UserAdministration from './Components/UserAdministration'
 import MyEvents from './Components/MyEvents'
 import EventDetails from './Components/EventDetails'
 // import UserHome from './Components/UserHome'
@@ -35,14 +35,14 @@ class App extends React.Component {
           ?
             <nav id="topMenuLinks"> 
               <ul>
-                  <li><NavLink to="/myhomepage">My Homepage</NavLink></li>
+                  {/* <li><NavLink to="/MyHomepae">My Homepage</NavLink></li> */}
                   <li><NavLink to="/mywishlist"> My Wishlist</NavLink></li>
                   <li><NavLink to="/myevents">My Events</NavLink></li>
                   <li><NavLink to="/UserAdministration">User Administration</NavLink></li>
               </ul>
             </nav>
           :
-            null
+           null
           }
         </div >
         <div className="twelve wide column"  >
@@ -51,7 +51,7 @@ class App extends React.Component {
             <Route path="/SignUp" component={SignUp} />
             <Route path='/LogIn' component={(localStorage.token === undefined || localStorage.token === "undefined" ) ? LogIn : null} />
             <Route exact path='/mywishlist' component={MyWishlist} />
-            <Route exact path='/myhomepage' component={MyHomepage} />
+            <Route exact path='/useradministration' component={UserAdministration} />
             <Route exact path='/myevents' component={MyEvents} />
             <Route exact path='/EventDetails' component={EventDetails} />
             <Route exact path="/" component={homepage} />

@@ -32,7 +32,9 @@ class SignUp extends React.Component {
             alert("Your 'password' and 'password confirmation' fields dont match")
             break
         default:
-          let user = {first_name: this.state.first_name, last_name: this.state.last_name, dob: this.state.dob}
+          let capitalFirst = this.state.first_name.charAt(0).toUpperCase() + this.state.first_name.slice(1)
+          let capitalLast = this.state.last_name.charAt(0).toUpperCase() + this.state.last_name.slice(1)
+          let user = {first_name: capitalFirst, last_name: capitalLast, dob: this.state.dob}
           let account = {email_address: this.state.email_address.toLowerCase(), password: this.state.password}
             this.props.signUp(user, account, this.props.history)
         }

@@ -63,7 +63,7 @@ class SignUp extends React.Component {
               <h5>First Name: <input required type="text" name="first_name" label='First Name' value={this.state.first_name} onChange={this.fieldChangeHandler} /></h5>
               <h5>Last Name: <input  type="text" name="last_name" label='Last Name'  value={this.state.last_name} onChange={this.fieldChangeHandler}/></h5>
               <h5>Date Of Birth: <input  type="date" name="dob" label='Last Name'  value={this.state.dob} onChange={this.fieldChangeHandler}/></h5>
-              <h5>Email Address: <input type="text" required name="email_address" fluid icon='user' iconPosition='left' label='E-mail address' placeholder="this is your login id"  value={this.state.email_address} onChange={this.fieldChangeHandler}/></h5>
+              <h5>Email Address: <input type="email" required name="email_address" fluid icon='user' iconPosition='left' label='E-mail address' placeholder="this is your login id"  value={this.state.email_address} onChange={this.fieldChangeHandler}/></h5>
               <h5>Password: <input required fluid icon='lock' type='password' iconPosition='left' placeholder='Password' type='password' label='Password' name="password"  value={this.state.password} onChange={this.fieldChangeHandler}  /></h5>
               <h5>Confirm Password: <input required fluid icon='lock' type='password' iconPosition='left' placeholder='Confirm Password' type='password' label='Confirm Password' name="password_confirmation" value={this.state.password_confirmation} onChange={this.fieldChangeHandler} /></h5>
 

@@ -98,12 +98,13 @@ nav li a.active {
   border-style: solid;
 }
 
-div .WishListCard {
+div .WishlistCard {
   margin-top: 0%;
-  margin-bottom: -1%;
-  
-  width: 35%;
-  height: 30%;
+  margin-bottom: 2%;
+  border: 2px solid black;
+  width: 90%;
+  height: 90%;
+  padding: 2px;
 }
 
 .WishlistCardImg{

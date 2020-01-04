@@ -4,6 +4,7 @@ let defaultState = {
     loggedInAcct: {},
     primaryUser: {},
     managingUsers: {},
+    allUserObjs: {},
     activeUser: {},
     activeUserWishList: {},
     activeUserManagedEvents: {},
@@ -11,7 +12,8 @@ let defaultState = {
     activeUserGiverEventsGetterOBJsArr: {},
     activeEvent: {},
     activeEventGiftGettersArr: {},
-    activeEventAllWishListItems: {}
+    activeEventAllWishListItems: {},
+    activeEventInvitees: {}
 
 }
 
@@ -51,6 +53,17 @@ function managingUsersReducer(state = defaultState.managingUsers, action) {
           return state
   }
 } // ends managingUsersReducer
+
+function allUserObjsReducer(state = defaultState.allUserObjs, action) {
+  switch (action.type) {
+      case "SET ALL USERS":
+          return action.payload
+      case "UNSET MANAGING USERS":
+          return action.payload
+      default:
+          return state
+  }
+} // ends allUserObjsReducer
 
 function activeUserReducer(state = defaultState.activeUser, action) {
   switch (action.type) {
@@ -140,6 +153,17 @@ function activeEventAllWishListItemsReducer(state = defaultState.activeEventAllW
   }
 } // ends activeEventAllWishListItemsReducer
 
+function activeEventInviteesReducer(state = defaultState.activeEventInvitees, action) {
+  switch (action.type) {
+      case "SET ACTIVE EVENT INVITEES LIST":
+          return action.payload
+      case "UNSET ACTIVE EVENT INVITEES LIST":
+          return action.payload
+      default:
+          return state
+  }
+} // ends activeEventInviteesReducer
+
 
 
 
@@ -148,6 +172,7 @@ let reducer = combineReducers({
   loggedInAcct: loggedInAccountReducer,
   primaryUser: accountsPrimaryUserReducer,
   managingUsers: managingUsersReducer,
+  allUserObjs: allUserObjsReducer,
   activeUser: activeUserReducer,
   activeUserWishList: activeUserWishListReducer,
   activeUserManagedEvents: activeUserManagedEventsReducer,
@@ -155,7 +180,8 @@ let reducer = combineReducers({
   activeUserGiverEventsGetterOBJsArr: activeUserGiverEventsGetterOBJsArrReducer,
   activeEvent: activeEventReducer,
   activeEventGiftGettersArr: activeEventGiftGettersArrReducer,
-  activeEventAllWishListItems: activeEventAllWishListItemsReducer
+  activeEventAllWishListItems: activeEventAllWishListItemsReducer,
+  activeEventInvitees: activeEventInviteesReducer
 })
 
 export default reducer

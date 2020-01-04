@@ -207,6 +207,7 @@ function logAccountIn (accountCredentials, history) {
             console.log("TEST - response from Fetch: ", response)
             dispatch({ type: "SET ACTIVE EVENT GIFT GETTERS ARRAY", payload:  response.eventGettersUserOBJsArr })
             dispatch({ type: "SET ACTIVE EVENT WISH LIST ITEMS", payload:  response.eventWishLists })
+            dispatch({ type: "SET ACTIVE EVENT INVITEES LIST", payload:  response.eventInviteeObjs })
             dispatch({ type: "SET ACTIVE EVENT", payload:  eventObj })
             history.push("/EventDetails")
           }
@@ -216,7 +217,7 @@ function logAccountIn (accountCredentials, history) {
       });
     } // ends Thunk dispatch function
   } // ends setActiveEvent
-
+  
   function addManagedUser (userDetails, managingAcctID, history) {
     return function (dispatch) {
       fetch(backendURL + "user", {
@@ -238,6 +239,7 @@ function logAccountIn (accountCredentials, history) {
       })
     } // ends Thunk dispatch function
   } // ends addEvent
+
   function addEvent (newEvent, primaryUserID) {
     return function (dispatch) {
       fetch(backendURL + "event", {
@@ -259,7 +261,67 @@ function logAccountIn (accountCredentials, history) {
       })
     } // ends Thunk dispatch function
   } // ends addManagedUser
+  
+  function gatherAndSetAllUsers () {
+    return function (dispatch) {
+      fetch( backendURL + "users")
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.status === "error") {
+          console.log("error: here's response: ", response)
+          } else {
+            console.log(response)
+            dispatch({ type: "SET ALL USERS", payload:  response.allUsers })
+          }
+        })
+      .catch((error) => {
+        console.log("autoLoginFETCHError", error)
+      });
+    } // ends Thunk dispatch function
+  } // ends setActiveEvent
 
+  function addInviteeToEvent (EventID, UserID) {
+    return function (dispatch) {
+      fetch(backendURL + "eventinvitees", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ event_gift_giver: {event_id: EventID, user_id: UserID} })
+      })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          dispatch({ type: "SET ACTIVE EVENT INVITEES LIST", payload: response.eventInviteeObjs })
+        }
+      })
+    } // ends Thunk dispatch function
+  } // ends addInviteeToEvent
+
+  function addGiftGetterToEvent (EventID, UserID) {
+    return function (dispatch) {
+      fetch(backendURL + "giftgetter", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ event_gift_getter: {event_id: EventID, user_id: UserID} })
+      })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          dispatch({ type: "SET ACTIVE EVENT GIFT GETTERS ARRAY",  payload: response.eventGettersUserOBJsArr })
+        }
+      })
+    } // ends Thunk dispatch function
+  } // ends addGiftGetterToEvent
+  
 export { 
         logAccountIn,
         autoLogIn,
@@ -270,5 +332,8 @@ export {
         switchActiveUser,
         setActiveEvent,
         addEvent,
-        addManagedUser
+        addManagedUser,
+        gatherAndSetAllUsers,
+        addInviteeToEvent,
+        addGiftGetterToEvent
       }

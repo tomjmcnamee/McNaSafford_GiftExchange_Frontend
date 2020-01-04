@@ -31,14 +31,19 @@ class App extends React.Component {
       <TopMenuBar history={this.props.history} />
       <div className="ui grid" >
         <div className="four wide column"  >
-          <nav id="topMenuLinks"> 
-            <ul>
-                <li><NavLink to="/myhomepage">My Homepage</NavLink></li>
-                <li><NavLink to="/mywishlist"> My Wishlist</NavLink></li>
-                <li><NavLink to="/myevents">My Events</NavLink></li>
-                <li><NavLink to="/UserAdministration">User Administration</NavLink></li>
-            </ul>
-          </nav>
+          {!!this.props.loggedInAcct.id  
+          ?
+            <nav id="topMenuLinks"> 
+              <ul>
+                  <li><NavLink to="/myhomepage">My Homepage</NavLink></li>
+                  <li><NavLink to="/mywishlist"> My Wishlist</NavLink></li>
+                  <li><NavLink to="/myevents">My Events</NavLink></li>
+                  <li><NavLink to="/UserAdministration">User Administration</NavLink></li>
+              </ul>
+            </nav>
+          :
+            null
+          }
         </div >
         <div className="twelve wide column"  >
         {/* <Switch> */}
@@ -61,4 +66,21 @@ class App extends React.Component {
     ) //ends return
   } // ends render
 }  // ends App Class
-export default App;
+
+
+
+function mdp(dispatch) {
+  return { 
+    // addEvent: (newEvent, primaryUserID) => dispatch(addEvent(newEvent, primaryUserID))
+  }
+}
+
+// this comes from reduct.js - K is local reference, V is foreign state attribute
+function msp(state) {
+  return { 
+    loggedInAcct: state.loggedInAcct,
+  } 
+}
+
+export default connect(msp, mdp)(App) 
+

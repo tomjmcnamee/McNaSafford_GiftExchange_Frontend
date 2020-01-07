@@ -123,3 +123,7 @@ div .WishlistCard {
 .changePoiterToFinger{
   cursor: pointer;
 }
+
+#MyEventsGrid {
+  margin-right: 50px;
+}

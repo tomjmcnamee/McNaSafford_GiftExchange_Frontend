@@ -18,7 +18,8 @@ class GridLinesBuilder extends React.Component {
             return(
             <tr className="left aligned changePoiterToFinger" onClick={() => this.props.setActiveEvent(this.props.gridLineObj,this.props.history)}>
             {/* <tr className="left aligned changePoiterToFinger" onClick={() => this.props.history.push("/EventDetails")}> */}
-              <td data-label="EventCreateDate" >{this.props.gridLineObj.created_at}</td>
+              {/* <td data-label="EventCreateDate" >{Date(this.props.gridLineObj.created_at)}</td> */}
+              <td data-label="EventCreateDate" >{Date(this.props.gridLineObj.created_at).slice(4,25)}</td>
               <td  data-label="EventName"  >{this.props.gridLineObj.event_name}</td>
               <td data-label="EventDate"  >{this.props.gridLineObj.event_date}</td>
             </tr>

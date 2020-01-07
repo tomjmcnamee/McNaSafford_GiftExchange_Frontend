@@ -76,7 +76,7 @@ class MyEvents extends React.Component {
             }
         </div>
         <br />
-        <div>
+        <div id="MyEventsGrid">
           <h3>Events I'm attending</h3>
             {eventsImAttending}
         </div>

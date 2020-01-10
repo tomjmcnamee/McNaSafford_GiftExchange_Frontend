@@ -12,9 +12,10 @@ class MyEvents extends React.Component {
     event_date: ""
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
-  }
+}
+
 
   formChangeHandler = (event) => {
     this.setState({
@@ -80,8 +81,6 @@ class MyEvents extends React.Component {
           <h3>Events I'm attending</h3>
             {eventsImAttending}
         </div>
-
-
       </div>
   )} // ends Return and Render
 } // ends class

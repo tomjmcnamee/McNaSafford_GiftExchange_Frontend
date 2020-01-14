@@ -90,10 +90,12 @@ class EventDetails extends React.Component
     }
 
     let selectedGetterWishListGrid
-    let filteredWishList
+    let userFilteredWishList
+    let statusFilteredWishList
     if (this.state.userIDofWishListToDisplay !== "" ) {
-      filteredWishList = this.props.activeEventAllWishListItems.filter( item => item.user_id == this.state.userIDofWishListToDisplay )
-      selectedGetterWishListGrid = <GridBuilder gridType="selectedGetterWishList" gridLinesArray={filteredWishList} history={this.props.history}/>
+      userFilteredWishList = this.props.activeEventAllWishListItems.filter( item => item.user_id == this.state.userIDofWishListToDisplay )
+      statusFilteredWishList = userFilteredWishList.filter( item => item.status === "added" )
+      selectedGetterWishListGrid = <GridBuilder gridType="selectedGetterWishList" gridLinesArray={statusFilteredWishList} history={this.props.history}/>
     } 
 
     

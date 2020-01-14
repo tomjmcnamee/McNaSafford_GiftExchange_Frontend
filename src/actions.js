@@ -322,6 +322,31 @@ function logAccountIn (accountCredentials, history) {
       })
     } // ends Thunk dispatch function
   } // ends addGiftGetterToEvent
+
+  function markWishlistItemAsPurchased (WishlistItemID, UserID, eventID) {
+    return function (dispatch) {
+      console.log("ckicked ID OF -----tt----", WishlistItemID)
+      fetch(backendURL + "wishlist", {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ itemIDToUpdate: WishlistItemID, PurchasingUserID: UserID, ActiveEventId: eventID })
+      })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          dispatch({ type: "SET ACTIVE EVENT WISH LIST ITEMS", payload:  response.eventWishLists })
+        }
+      })
+    } // ends Thunk dispatch function
+  } // ends addGiftGetterToEvent
+
+
+
   
 export { 
         logAccountIn,
@@ -336,5 +361,6 @@ export {
         addManagedUser,
         gatherAndSetAllUsers,
         addInviteeToEvent,
-        addGiftGetterToEvent
+        addGiftGetterToEvent,
+        markWishlistItemAsPurchased
       }

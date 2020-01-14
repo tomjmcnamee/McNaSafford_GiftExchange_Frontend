@@ -1,11 +1,16 @@
 import React from 'react'
-import { setActiveEvent } from '../actions'
+import { setActiveEvent, markWishlistItemAsPurchased } from '../actions'
 import { connect } from 'react-redux'
 
 
 
 
 class GridLinesBuilder extends React.Component {
+
+  markWishlistItemAsPurchased = ( event) => {
+    event.preventDefault()
+    this.props.markWishlistItemAsPurchased( event.target.id, this.props.activeUser.id, this.props.activeEvent.id)
+  }
 
 	
 	
@@ -42,7 +47,8 @@ class GridLinesBuilder extends React.Component {
               <td data-label="ItemImage" ><img className="WishlistCardImgINGRID" alt="Gift" src={this.props.gridLineObj.gift_image}  /></td>
               <td  data-label="ItemName"  >{this.props.gridLineObj.gift_name}</td>
               <td data-label="LinkButton"  ><a target="_blank" href={this.props.gridLineObj.amazon_url}>see this item on Amazon</a></td>
-              <td data-label="Purchased"  ><button onClick={() => console.log("You purchased this one")}>Mark as purchased!</button></td>
+              {/* <td data-label="Purchased"  ><button onClick={() => console.log("You purchased this one")}>Mark as purchased!</button></td> */}
+              <td data-label="Purchased"  ><button id={this.props.gridLineObj.id} onClick={this.markWishlistItemAsPurchased}>Mark as purchased!</button></td>
             </tr>
             )  // ends "Campaigns You've Supported" RETURN
           break 
@@ -55,7 +61,8 @@ class GridLinesBuilder extends React.Component {
 
 function mdp(dispatch) {
   return { 
-    setActiveEvent: ( eventObj, history ) => dispatch(setActiveEvent( eventObj, history))
+    setActiveEvent: ( eventObj, history ) => dispatch(setActiveEvent( eventObj, history)),
+    markWishlistItemAsPurchased: ( wishlistItemID, UserID, ActiveEventId ) => dispatch(markWishlistItemAsPurchased( wishlistItemID, UserID, ActiveEventId))
   }
 }
 
@@ -63,7 +70,8 @@ function mdp(dispatch) {
 // this comes from reduct.js - K is local reference, V is foreign state attribute
 function msp(state) {
   return { 
-    // workingEntityObj: state.workingEntityObj
+    activeUser: state.activeUser,
+    activeEvent: state.activeEvent
   }
 }
 

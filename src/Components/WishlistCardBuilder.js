@@ -24,7 +24,7 @@ class WishlistCardBuilder extends React.Component {
             <h2>{this.props.wishlistObj.gift_name}</h2>
             <img className="WishlistCardImg" alt="Gift" src={this.props.wishlistObj.gift_image}  />
             <p>Status: {this.props.wishlistObj.status}</p>
-            <p>Created: {Date(this.props.wishlistObj.created_at)}</p>
+            <p>Created: {Date(this.props.wishlistObj.created_at).slice(4,25)}</p>
             {/* <button onClick={setSelectedCampaignAndContributions("campaigns/" + this.props.campaignObj.id, this.props.campaignObj, this.props.history)} >View Details</button> */}
             {/* <div id="CampaignCardDescription" >
               <h5>

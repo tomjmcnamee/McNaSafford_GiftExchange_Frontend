@@ -44,14 +44,14 @@ class MyEvents extends React.Component {
   render() {
     let eventsIveCreated
     if (this.props.activeUserManagedEvents.length > 0) {
-      eventsIveCreated = <GridBuilder gridType="EventsGrid" gridLinesArray={this.props.activeUserManagedEvents} history={this.props.history}/>
+      eventsIveCreated = <GridBuilder gridType="EventsIveCreated" gridLinesArray={this.props.activeUserManagedEvents} history={this.props.history}/>
     } else {
       eventsIveCreated = []
     }
     
     let eventsImAttending
     if (this.props.activeUserGiverEventOBJsArr.length > 0) {
-      eventsImAttending = <GridBuilder gridType="EventsGrid" gridLinesArray={this.props.activeUserGiverEventOBJsArr} history={this.props.history}/>
+      eventsImAttending = <GridBuilder gridType="EventsImAttending" gridLinesArray={this.props.activeUserGiverEventOBJsArr} history={this.props.history}/>
     } else {
       eventsImAttending = []
     }

@@ -6,12 +6,6 @@ import { removeItemFromWishlist } from '../actions'
 
 class WishlistCardBuilder extends React.Component {
 
-  editItemClickHandler = (itemObj) => {
-    this.setState({
-
-    })
-    
-  }
 
 
 
@@ -25,14 +19,15 @@ class WishlistCardBuilder extends React.Component {
             <img className="WishlistCardImg" alt="Gift" src={this.props.wishlistObj.gift_image}  />
             {/* <p>Status: {this.props.wishlistObj.status}</p> */}
             {/* <p>Added to your wishlist: {Date(this.props.wishlistObj.created_at).slice(4,25)}</p> */}
-            <p>Added to your wishlist: {new Date(this.props.wishlistObj.created_at).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</p>
+            {/* <p>Added to your wishlist: {(this.props.wishlistObj.created_at).getTimezoneOffset() * 60000}</p> */}
+            <p>Added to your wishlist: {new Date(this.props.wishlistObj.created_at).toString().slice(4, 21)}</p>
             {/* <button onClick={setSelectedCampaignAndContributions("campaigns/" + this.props.campaignObj.id, this.props.campaignObj, this.props.history)} >View Details</button> */}
             {/* <div id="CampaignCardDescription" >
               <h5>
                 {this.props.campaignObj.campaign_description}
               </h5>
             </div> */}
-            <button className="WishlistItemCardButton" onClick={() => this.editItemClickHandler(this.props.wishlistObj)} >Edit Item</button>
+            <a href={this.props.wishlistObj.amazon_url} target="_none"><button className="WishlistItemCardButton" >View Item on Amazon</button></a>
             <button className="WishlistItemCardButton" onClick={() => this.props.removeItemFromWishlist(this.props.wishlistObj.id, this.props.activeUser.id)} >Remove Item</button>
           </div>
           )// ends return

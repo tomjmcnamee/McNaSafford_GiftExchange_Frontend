@@ -1,6 +1,8 @@
 import React from 'react'
 import { setActiveEvent, markWishlistItemAsPurchased } from '../actions'
 import { connect } from 'react-redux'
+import { reformatDateToMMDDYYYY } from '../SupportingFunctions'
+
 
 
 
@@ -23,10 +25,9 @@ class GridLinesBuilder extends React.Component {
             return(
             <tr className="left aligned changePoiterToFinger" onClick={() => this.props.setActiveEvent(this.props.gridLineObj,this.props.history)}>
             {/* <tr className="left aligned changePoiterToFinger" onClick={() => this.props.history.push("/EventDetails")}> */}
-              {/* <td data-label="EventCreateDate" >{Date(this.props.gridLineObj.created_at)}</td> */}
-              <td data-label="EventCreateDate" >{new Date(this.props.gridLineObj.created_at).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</td>
+              <td data-label="EventCreateDate" >{reformatDateToMMDDYYYY(new Date(this.props.gridLineObj.created_at).toString().slice(4, 21))}</td>
               <td  data-label="EventName"  >{this.props.gridLineObj.event_name}</td>
-              <td data-label="EventDate"  >{this.props.gridLineObj.event_date}</td>
+              <td data-label="EventDate"  >{reformatDateToMMDDYYYY(this.props.gridLineObj.event_date)}</td>
             </tr>
             )  // ends "Campaigns You've Supported" RETURN
           break 
@@ -36,7 +37,7 @@ class GridLinesBuilder extends React.Component {
             {/* <tr className="left aligned changePoiterToFinger" onClick={() => this.props.history.push("/EventDetails")}> */}
               {/* <td data-label="EventCreateDate" >{Date(this.props.gridLineObj.created_at)}</td> */}
               <td  data-label="EventName"  >{this.props.gridLineObj.event_name}</td>
-              <td data-label="EventDate"  >{this.props.gridLineObj.event_date}</td>
+              <td data-label="EventDate"  >{reformatDateToMMDDYYYY(this.props.gridLineObj.event_date)}</td>
             </tr>
             )  // ends "Campaigns You've Supported" RETURN
           break 

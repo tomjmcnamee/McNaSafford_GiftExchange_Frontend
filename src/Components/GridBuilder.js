@@ -76,7 +76,8 @@ class GridBuilder extends React.Component {
             GridLines = this.props.gridLinesArray.map(gridLineObj => <GridLinesBuilder key={gridLineObj.id} 
                                                                         gridLineObj={gridLineObj} 
                                                                         gridType="selectedGetterWishList"
-                                                                        history={this.props.history} 
+                                                                        history={this.props.history}
+                                                                        selectedGetterOBJ={this.props.selectedGetterOBJ} 
                                                                       />)
           } // ends GridLines IF statement
           return(

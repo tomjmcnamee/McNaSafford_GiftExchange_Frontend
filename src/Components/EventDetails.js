@@ -9,7 +9,7 @@ class EventDetails extends React.Component
  {
 
   state = {
-    userIDofWishListToDisplay: "",
+    userOBJofWishListToDisplay: {},
     showInvitableUsers: false,
     showPotentialGiftGetters: false,
     userIDtoAddAsInvitee: "",
@@ -37,14 +37,15 @@ class EventDetails extends React.Component
   }
 
 
-  exposeWishList = (userID) => {
-    if (userID !== this.props.activeUser.id) {
+  exposeWishList = (userOBJ) => {
+    if (userOBJ.id !== this.props.activeUser.id) {
+      let newUserObj = userOBJ
       this.setState({
-        userIDofWishListToDisplay: userID
+        userOBJofWishListToDisplay: newUserObj
       })
     } else {
       this.setState({
-        userIDofWishListToDisplay: ""
+        userOBJofWishListToDisplay: {}
       })
     }
   }
@@ -84,18 +85,22 @@ class EventDetails extends React.Component
   render() {
     let eventGiftGetters
     if (this.props.activeEventGiftGettersArr.length > 0) {
-      eventGiftGetters = this.props.activeEventGiftGettersArr.map( user => <li className="changePoiterToFinger" onClick={() => this.exposeWishList(user.id)}>{user.first_name + " " + user.last_name}</li>)
+      eventGiftGetters = this.props.activeEventGiftGettersArr.map( user => <li className="changePoiterToFinger" onClick={() => this.exposeWishList(user)}>{user.first_name + " " + user.last_name}</li>)
     } else {
       eventGiftGetters = []
     }
 
-    let selectedGetterWishListGrid
     let userFilteredWishList
-    let statusFilteredWishList
-    if (this.state.userIDofWishListToDisplay !== "" ) {
-      userFilteredWishList = this.props.activeEventAllWishListItems.filter( item => item.user_id == this.state.userIDofWishListToDisplay )
-      statusFilteredWishList = userFilteredWishList.filter( item => item.status === "added" )
-      selectedGetterWishListGrid = <GridBuilder gridType="selectedGetterWishList" gridLinesArray={statusFilteredWishList} history={this.props.history}/>
+    let statusOrGiverFilteredWishList
+    let selectedGetterWishListGrid
+    if (this.state.userOBJofWishListToDisplay.id ) {
+      userFilteredWishList = this.props.activeEventAllWishListItems.filter( item => item.user_id == this.state.userOBJofWishListToDisplay.id )
+      statusOrGiverFilteredWishList = userFilteredWishList.filter( item => ( item.status === "added" || item.giving_user_id === this.props.activeUser.id) )
+      selectedGetterWishListGrid = <GridBuilder 
+                  gridType="selectedGetterWishList"
+                  gridLinesArray={statusOrGiverFilteredWishList}
+                  history={this.props.history}
+                  selectedGetterOBJ={this.state.userOBJofWishListToDisplay} />
     } 
 
     
@@ -182,7 +187,7 @@ class EventDetails extends React.Component
             <h3>Below are the names of people that will recieve gifts at this event.  Clicking on any name will expose the items on their wishlists that have not yet been purchased as gifts by other people.  <br/><b style={{color: "red"}}> Note: you can't see your own wishlist from this view since it would ruin the surprise!</b></h3>
             <ul>
               {eventGiftGetters}
-              {this.state.userIDofWishListToDisplay !== "" ? selectedGetterWishListGrid.props.gridLinesArray.length > 0 ? selectedGetterWishListGrid : <h3>This user's wishlist is empty</h3> : null}
+              {this.state.userOBJofWishListToDisplay.id ? selectedGetterWishListGrid.props.gridLinesArray.length > 0 ? selectedGetterWishListGrid : <h3>This user's wishlist is empty</h3> : null}
             </ul>
 
             

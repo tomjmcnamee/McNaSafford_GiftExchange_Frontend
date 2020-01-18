@@ -1,5 +1,5 @@
 import React from 'react'
-import { setActiveEvent, markWishlistItemAsPurchased } from '../actions'
+import { setActiveEvent, markWishlistItemAsPurchased, cancelCommitmentToPurchase } from '../actions'
 import { connect } from 'react-redux'
 import { reformatDateToMMDDYYYY } from '../SupportingFunctions'
 
@@ -12,6 +12,26 @@ class GridLinesBuilder extends React.Component {
   markWishlistItemAsPurchased = ( event) => {
     event.preventDefault()
     this.props.markWishlistItemAsPurchased( event.target.id, this.props.activeUser.id, this.props.activeEvent.id)
+  }
+
+  cancelCommitmentToPurchase = ( event) => {
+    event.preventDefault()
+    this.props.cancelCommitmentToPurchase( event.target.id,  this.props.activeEvent.id)
+  }
+
+  selectedGetterWishlistRowButton = (gridLineObj) => {
+    let outputLine
+    switch (true) {
+      case (gridLineObj.status === "added"):
+        outputLine = <td ><button id={this.props.gridLineObj.id} onClick={this.markWishlistItemAsPurchased}>Mark as purchased!</button></td>
+        break
+      case (gridLineObj.status === "marked as purchased" && gridLineObj.giving_user_id === this.props.activeUser.id):
+    outputLine = <td ><p>You've registered to purchase this wishlist item for {this.props.selectedGetterOBJ.first_name}</p><button id={this.props.gridLineObj.id} onClick={this.cancelCommitmentToPurchase}>Cancel Commitment to Purchase</button></td>
+        break
+      default:
+        console.log("This event should be happening")
+    }
+    return outputLine
   }
 
 	
@@ -48,9 +68,7 @@ class GridLinesBuilder extends React.Component {
               <td data-label="ItemImage" ><img className="WishlistCardImgINGRID" alt="Gift" src={this.props.gridLineObj.gift_image}  /></td>
               <td  data-label="ItemName"  >{this.props.gridLineObj.gift_name}</td>
               <td data-label="LinkButton"  ><a target="_blank" href={this.props.gridLineObj.amazon_url}>see this item on Amazon</a></td>
-              {/* <td data-label="Purchased"  ><button onClick={() => console.log("You purchased this one")}>Mark as purchased!</button></td> */}
-              <td data-label="Purchased"  ><button id={this.props.gridLineObj.id} onClick={this.markWishlistItemAsPurchased}>Mark as purchased!</button></td>
-            </tr>
+              {this.selectedGetterWishlistRowButton(this.props.gridLineObj)}            </tr>
             )  // ends "Campaigns You've Supported" RETURN
           break 
         default:
@@ -63,7 +81,8 @@ class GridLinesBuilder extends React.Component {
 function mdp(dispatch) {
   return { 
     setActiveEvent: ( eventObj, history ) => dispatch(setActiveEvent( eventObj, history)),
-    markWishlistItemAsPurchased: ( wishlistItemID, UserID, ActiveEventId ) => dispatch(markWishlistItemAsPurchased( wishlistItemID, UserID, ActiveEventId))
+    markWishlistItemAsPurchased: ( wishlistItemID, UserID, ActiveEventId ) => dispatch(markWishlistItemAsPurchased( wishlistItemID, UserID, ActiveEventId)),
+    cancelCommitmentToPurchase: ( wishlistItemID, ActiveEventId ) => dispatch(cancelCommitmentToPurchase( wishlistItemID, ActiveEventId))
   }
 }
 
